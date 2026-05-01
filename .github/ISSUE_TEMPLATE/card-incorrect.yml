@@ -1,0 +1,34 @@
+name: Card Incorrect
+description: A card in OpenRift has wrong or missing data
+labels: ["card-incorrect"]
+body:
+  - type: input
+    id: card-name
+    attributes:
+      label: Card name
+      placeholder: "e.g. Ahri, Alluring"
+    validations:
+      required: true
+  - type: input
+    id: short-code
+    attributes:
+      label: Short code
+      placeholder: "e.g. OGN-066"
+    validations:
+      required: false
+  - type: textarea
+    id: whats-wrong
+    attributes:
+      label: What's wrong?
+      description: Which field is incorrect, what does OpenRift currently show, and what should it show?
+      placeholder: |
+        Example: The rules text is showing "When I hold, you score 1 point." but should be "When I score, you draw 1 card."
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source
+      description: How do you know? Link to official source, photo, etc.
+    validations:
+      required: true

@@ -1,0 +1,40 @@
+name: Card Missing
+description: A card isn't in OpenRift yet
+labels: ["card-missing"]
+body:
+  - type: input
+    id: card-name
+    attributes:
+      label: Card name
+      placeholder: "e.g. Ahri, Alluring"
+    validations:
+      required: true
+  - type: input
+    id: short-code
+    attributes:
+      label: Short code
+      description: The collector code printed on the card.
+      placeholder: "e.g. OGN-066"
+    validations:
+      required: false
+  - type: input
+    id: set
+    attributes:
+      label: Set
+      placeholder: "e.g. Origins"
+    validations:
+      required: false
+  - type: textarea
+    id: source
+    attributes:
+      label: Source
+      description: Where did you see this card? Official reveal, set release page, photo of the physical card, etc.
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else?
+      description: Image links, rules text, anything that would help a maintainer add the card.
+    validations:
+      required: false

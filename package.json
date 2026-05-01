@@ -1,0 +1,18 @@
+{
+  "name": "openrift-data",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Community-contributed card data for OpenRift",
+  "license": "AGPL-3.0-only",
+  "type": "module",
+  "scripts": {
+    "validate": "ajv validate -s community.schema.json -d community.json --spec=draft2020 --strict=true",
+    "check-uniqueness": "node scripts/check-uniqueness.mjs",
+    "check": "bun run validate && bun run check-uniqueness"
+  },
+  "devDependencies": {
+    "ajv": "8.20.0",
+    "ajv-cli": "5.0.0",
+    "ajv-formats": "3.0.1"
+  }
+}

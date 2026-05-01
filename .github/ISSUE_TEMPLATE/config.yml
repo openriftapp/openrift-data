@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Discord
+    url: https://discord.gg/Qb6RcjXq6z
+    about: Chat with the community, ask questions, or share ideas
+  - name: OpenRift app issues
+    url: https://github.com/openriftapp/openrift/issues
+    about: Bugs or feature requests for the OpenRift app itself (not card data)

@@ -1,0 +1,35 @@
+version: 2
+# "npm" + enable-beta-ecosystems is a workaround so Dependabot updates bun.lock.
+# "bun" ecosystem is GA but has a known bug where it skips the lockfile:
+# https://github.com/dependabot/dependabot-core/issues/11602
+enable-beta-ecosystems: true
+updates:
+  - package-ecosystem: "bun"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "main"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    assignees:
+      - eikowagenknecht
+    groups:
+      npm-updates:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "main"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    assignees:
+      - eikowagenknecht
