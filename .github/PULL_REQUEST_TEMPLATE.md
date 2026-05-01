@@ -8,6 +8,6 @@
 
 ## Checklist
 
-- [ ] I ran `bun run validate` locally and it passed
+- [ ] I ran `bun run check` locally and it passed
 - [ ] Image links are stable HTTPS URLs (not hotlinked from riftbound.leagueoflegends.com)
 - [ ] I agree to the [CLA](../CLA.md)

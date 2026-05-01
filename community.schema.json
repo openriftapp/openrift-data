@@ -2,89 +2,16 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/openriftapp/openrift-data/blob/main/community.schema.json",
   "title": "OpenRift Community Card Data",
-  "description": "Schema for community.json. Mirrors the candidate upload payload accepted by openrift.app's admin panel.",
+  "description": "Schema for the built community.json release artifact. Generated from contributions/ by scripts/build-community.mjs. Mirrors openrift.app's admin candidate upload payload.",
   "type": "object",
   "required": ["provider", "candidates"],
   "additionalProperties": false,
   "properties": {
-    "provider": {
-      "const": "community",
-      "description": "Always 'community'. The admin upload page uses this to route the data to the community provider."
-    },
+    "provider": { "const": "community" },
     "candidates": {
       "type": "array",
-      "minItems": 1,
-      "items": { "$ref": "#/$defs/candidate" }
-    }
-  },
-  "$defs": {
-    "communityId": {
-      "type": "string",
-      "pattern": "^community:[A-Za-z0-9][A-Za-z0-9:_-]*$",
-      "description": "Must start with 'community:' to namespace from official providers."
-    },
-    "imageUrl": {
-      "type": ["string", "null"],
-      "pattern": "^https://",
-      "description": "Stable HTTPS link. Don't hotlink riftbound.leagueoflegends.com."
-    },
-    "candidate": {
-      "type": "object",
-      "required": ["card", "printings"],
-      "additionalProperties": false,
-      "properties": {
-        "card": { "$ref": "#/$defs/card" },
-        "printings": {
-          "type": "array",
-          "minItems": 1,
-          "items": { "$ref": "#/$defs/printing" }
-        }
-      }
-    },
-    "card": {
-      "type": "object",
-      "required": ["name", "external_id"],
-      "additionalProperties": false,
-      "properties": {
-        "name": { "type": "string", "minLength": 1 },
-        "type": { "type": ["string", "null"] },
-        "super_types": { "type": "array", "items": { "type": "string", "minLength": 1 } },
-        "domains": { "type": "array", "items": { "type": "string", "minLength": 1 } },
-        "might": { "type": ["integer", "null"], "minimum": 0 },
-        "energy": { "type": ["integer", "null"], "minimum": 0 },
-        "power": { "type": ["integer", "null"], "minimum": 0 },
-        "might_bonus": { "type": ["integer", "null"], "minimum": 0 },
-        "rules_text": { "type": ["string", "null"] },
-        "effect_text": { "type": ["string", "null"] },
-        "tags": { "type": "array", "items": { "type": "string", "minLength": 1 } },
-        "short_code": { "type": ["string", "null"] },
-        "external_id": { "$ref": "#/$defs/communityId" }
-      }
-    },
-    "printing": {
-      "type": "object",
-      "required": ["short_code", "external_id"],
-      "additionalProperties": false,
-      "properties": {
-        "short_code": { "type": "string", "minLength": 1 },
-        "set_id": { "type": ["string", "null"] },
-        "set_name": { "type": ["string", "null"] },
-        "rarity": { "type": ["string", "null"] },
-        "art_variant": { "type": ["string", "null"] },
-        "is_signed": { "type": "boolean" },
-        "marker_slugs": { "type": "array", "items": { "type": "string", "minLength": 1 } },
-        "distribution_channel_slugs": { "type": "array", "items": { "type": "string", "minLength": 1 } },
-        "finish": { "type": ["string", "null"] },
-        "artist": { "type": ["string", "null"] },
-        "public_code": { "type": ["string", "null"] },
-        "printed_rules_text": { "type": ["string", "null"] },
-        "printed_effect_text": { "type": ["string", "null"] },
-        "image_url": { "$ref": "#/$defs/imageUrl" },
-        "flavor_text": { "type": ["string", "null"] },
-        "external_id": { "$ref": "#/$defs/communityId" },
-        "language": { "type": ["string", "null"], "maxLength": 5, "pattern": "^[a-z]{2,5}$" },
-        "printed_name": { "type": ["string", "null"] }
-      }
+      "minItems": 0,
+      "items": { "$ref": "card.schema.json" }
     }
   }
 }

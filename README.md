@@ -4,27 +4,33 @@ Community-contributed card data for [OpenRift](https://openrift.app), the open-s
 
 _Open source. Open data. Open everything._
 
-> Cards added here flow into openrift.app via the existing candidate-review pipeline. Maintainers tag a release, upload `community.json` to the admin panel, and the cards go through the same review flow as data from TCGplayer, Cardmarket, and CardTrader.
+> Cards added here flow into openrift.app via the existing candidate-review pipeline. Each release builds a `community.json` artifact, which a maintainer uploads to the admin panel. From there, contributions go through the same review flow as data from TCGplayer, Cardmarket, and CardTrader.
 
 **[openrift.app](https://openrift.app)** · [Main repo](https://github.com/openriftapp/openrift) · [Discord](https://discord.gg/Qb6RcjXq6z)
 
 ## What's here
 
-- `community.json` — the live community-contributed card catalog, in the same shape OpenRift's admin candidate uploader accepts.
-- `community.schema.json` — JSON Schema for `community.json`. Validated on every PR.
-- `scripts/check-uniqueness.mjs` — checks that no two cards or printings share an `external_id`.
+- `contributions/<card-slug>.json` — one file per card. The source of truth.
+- `card.schema.json` — JSON Schema for each contribution file. Validated on every PR.
+- `community.schema.json` — JSON Schema for the built release artifact.
+- `scripts/build-community.mjs` — merges all `contributions/*.json` into a single `community.json`.
+- `scripts/validate-contributions.mjs` — validates each contribution file against `card.schema.json`.
+- `scripts/check-uniqueness.mjs` — asserts no two cards or printings share an `external_id`.
+
+`community.json` itself is **not committed**. It's built on release and attached to the [GitHub Release](https://github.com/openriftapp/openrift-data/releases) as a download.
 
 ## How to contribute
 
-The smoothest path is the contribute form on openrift.app (coming soon). It walks you through the fields, validates as you type, and generates a PR for you.
+The smoothest path is the contribute form on openrift.app (coming soon). It walks you through the fields, validates as you type, and opens a prefilled PR for you.
 
-If you'd rather edit the file directly:
+If you'd rather edit files directly:
 
 1. Fork this repo.
-2. Add your card to `community.json` under `candidates`. Mirror the shape of the existing example.
-3. Use `external_id: "community:<slug>"` for cards and `community:<short-code>:<finish>:<lang>` for printings (or any unique string starting with `community:`).
-4. Image links must be `https://` and should point somewhere stable (your own hosting, GitHub user-content, Imgur). Don't hotlink the official Riftbound site.
-5. Open a PR. CI runs schema validation and uniqueness checks. A maintainer reviews and merges.
+2. Add a new file under `contributions/<card-slug>.json` (or edit an existing one if you're correcting a card).
+3. Mirror the shape of the existing example (`contributions/ahri-alluring.json`).
+4. Use `external_id: "community:<slug>"` for cards and `community:<short-code>:<finish>:<lang>` for printings (or any unique string starting with `community:`).
+5. Image links must be `https://` and should point somewhere stable (your own hosting, GitHub user-content, Imgur). Don't hotlink the official Riftbound site.
+6. Run `bun install && bun run check` to validate locally, then open a PR.
 
 For details and edge cases see [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -34,11 +40,18 @@ For details and edge cases see [CONTRIBUTING.md](CONTRIBUTING.md).
 Contributor PR  ──►  CI validation  ──►  Maintainer review  ──►  Merge to main
                                                                       │
                                                                       ▼
-                                                              Tagged release
+                                                              Maintainer tags
+                                                              a release (vX.Y.Z)
                                                                       │
                                                                       ▼
-                                                       Maintainer uploads to
-                                                       openrift.app admin panel
+                                                       CI builds community.json
+                                                       and attaches to the
+                                                       GitHub Release
+                                                                      │
+                                                                      ▼
+                                                       Maintainer downloads it,
+                                                       uploads to openrift.app's
+                                                       admin candidate page
                                                                       │
                                                                       ▼
                                                        Goes through the existing
@@ -47,7 +60,7 @@ Contributor PR  ──►  CI validation  ──►  Maintainer review  ──�
                                                        Cardmarket, CardTrader
 ```
 
-The `community` provider in OpenRift is reuploaded in full on each release; it's never patched. The file in `main` is always the complete current state.
+The `community` provider in OpenRift is reuploaded in full on each release; it's never patched. The release artifact is always the complete current state.
 
 ## Legal
 

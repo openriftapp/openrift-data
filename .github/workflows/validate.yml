@@ -40,3 +40,6 @@ jobs:
 
       - name: Uniqueness check
         run: bun run check-uniqueness
+
+      - name: Build smoke test
+        run: bun run build
