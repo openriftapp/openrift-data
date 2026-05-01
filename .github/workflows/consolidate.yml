@@ -1,0 +1,43 @@
+name: Consolidate
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ci-${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  consolidate:
+    runs-on: ubuntu-latest
+    # Skip the bot's own follow-up commit so we don't loop. The script is
+    # idempotent (it only acts on `--<date>` suffixed files) so even without
+    # this guard a second run would no-op, but the guard saves a CI minute.
+    if: ${{ github.actor != 'github-actions[bot]' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Run consolidation
+        run: bun run consolidate
+
+      - name: Commit and push
+        run: |
+          if git diff --quiet HEAD; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add contributions/
+          git commit -m "chore: consolidate dated contribution files"
+          git push

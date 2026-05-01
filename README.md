@@ -16,12 +16,13 @@ _Open source. Open data. Open everything._
 - `scripts/build-community.mjs` — merges all `contributions/*.json` into a single `community.json`.
 - `scripts/validate-contributions.mjs` — validates each contribution file against `card.schema.json`.
 - `scripts/check-uniqueness.mjs` — asserts no two cards or printings share an `external_id`.
+- `scripts/consolidate-contributions.mjs` — renames `contributions/<slug>--<date>.json` files to `<slug>.json` and strips the `--<date>` segment from `external_id` values. Runs automatically on push to `main` (see `.github/workflows/consolidate.yml`); the openrift.app contribute form submits dated files so its prefilled GitHub URL doesn't collide with existing paths, and this script reverts that workaround once the PR merges.
 
 `community.json` itself is **not committed**. It's built on release and attached to the [GitHub Release](https://github.com/openriftapp/openrift-data/releases) as a download.
 
 ## How to contribute
 
-The smoothest path is the contribute form on openrift.app (coming soon). It walks you through the fields, validates as you type, and opens a prefilled PR for you.
+The smoothest path is the [contribute form on openrift.app](https://openrift.app/contribute). It walks you through the fields, validates as you type, and opens a prefilled PR for you.
 
 If you'd rather edit files directly:
 

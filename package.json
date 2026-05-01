@@ -9,6 +9,7 @@
     "validate": "node scripts/validate-contributions.mjs",
     "check-uniqueness": "node scripts/check-uniqueness.mjs",
     "check": "bun run validate && bun run check-uniqueness",
+    "consolidate": "node scripts/consolidate-contributions.mjs",
     "build": "node scripts/build-community.mjs"
   },
   "devDependencies": {
